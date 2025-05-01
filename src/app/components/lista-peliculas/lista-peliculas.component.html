@@ -1,0 +1,85 @@
+<br><br><h2> Directivas estructurales tradicionales</h2>
+
+<div *ngIf="movies.length==0">
+  <p>NO Hay peliculas que mostrar</p>
+</div>
+
+<div *ngIf="movies.length>0" >
+  <div *ngFor="let peli of movies"class="contenedor">
+    <div class ="pelicula">
+      <h4>{{peli.title | uppercase }}</h4>
+      <p>{{peli.genre}}</p>
+      <!-- [src] esto son directivas de atributos
+      permiten hacer biding de propiedades o atributoos -->
+
+      <img [src]="peli.poster" [alt]="peli.title">
+      <p><strong>Fecha: </strong>{{peli.releaseDate | date: "dd-MM-yyyy"}}</p>
+      <p><strong>Presupuesto: </strong>{{peli.budget| currency:"EUR"}}</p>
+    </div>
+
+  </div>
+</div>
+<br><br>
+
+
+
+
+<h2> Directivas estructurales modernas</h2>
+
+@if (movies.length==0) {
+  <p>NO Hay peliculas que mostrar</p>
+
+}@else {
+  @for (peli of movies; track $index) {
+    <div class ="pelicula">
+      <h4>{{peli.title | uppercase }}</h4>
+      <p>{{peli.genre}}</p>
+      @if (peli.poster) {
+        <img [src]="peli.poster" [alt]="peli.title" #imgP (mouseenter)="activar(imgP)"
+        (mouseleave)="desactivar(imgP)"/>
+      } @else {
+        <img src="../images/default.png" [alt]="peli.title">
+      }
+      <p><strong>Fecha: </strong>{{peli.releaseDate | date: "dd-MM-yyyy"}}</p>
+      <p><strong>Presupuesto: </strong>{{peli.budget| currency:"EUR"}}</p>
+      <button class="botton"(click)="comprar(peli)">Comprar</button>
+    </div>
+  }
+}
+
+<br><br>
+
+<h2>Directivas usando ANGULAR</h2>
+
+@if (movies.length==0) {
+  <p>NO Hay peliculas que mostrar</p>
+
+}@else {
+  @for (peli of movies; track $index) {
+    <mat-card class="pelicula" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{peli.title}}</mat-card-title>
+        <mat-card-subtitle>{{peli.genre}}</mat-card-subtitle>
+      </mat-card-header>
+      @if (peli.poster) {
+        <img mat-card-image [src]="peli.poster" [alt]="peli.title" #imgP (mouseenter)="activar(imgP)"
+        (mouseleave)="desactivar(imgP)"/>
+      } @else {
+        <img mat-card-image src="../images/default.png" [alt]="peli.title">
+      }
+
+      <mat-card-content>
+        <p><strong>Fecha: </strong>{{peli.releaseDate | date: "dd-MM-yyyy"}}</p>
+        <p><strong>Presupuesto: </strong>{{peli.budget| currency:"EUR"}}</p>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          mat-raised-button class="boton"(click)="comprar(peli)">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="shopping_cart"></mat-icon>
+          Comprar</button>
+      </mat-card-actions>
+    </mat-card>
+  }
+}
+
